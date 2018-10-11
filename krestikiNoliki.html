@@ -19,25 +19,26 @@
         }
         
         .firstCells{
-            background-position: 5px;
+            background-position: center center;
         }
         .secondCells {
             width:140px;
         }
         .thirdCells {
-            background-position: 20px -5px ;
+            background-position: center center ;
         }
     </style>
     
     <script> 
         window.onload = function() {
-            //для будущей игры на двоих
+            //игра на двоих
             function Player(name) {
                 this.name = name;
                 this.figures = "";
                 this.wins = 0;
             }
                 
+            //основные настройки игры
             function Game () {
               this.currentSymbol= "krestik";
               this.firstPlayerScore = 0;
@@ -69,8 +70,6 @@
             
             var game = new Game();
             
-                
-            
             var table = document.querySelectorAll('td');
             
             //проверка отдельной линии по 3м индексам
@@ -86,7 +85,6 @@
             
             //проверка поля на окончание игры
               function checkArea () {
-                  
                   
                //проверка горизонталей
                    checkLine(0,1,2);
@@ -116,16 +114,11 @@
             
           
             
-            
+            //присвоение обработчиков событий
             for(var i=0; i<table.length;i++)
                 table[i].onclick = tableReaction;
             
-           
-            
-            
-            
-          
-            
+  
             
         };
         
