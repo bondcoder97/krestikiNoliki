@@ -1,0 +1,148 @@
+<!doctype html> 
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Крестики - Нолики </title>
+    <style>
+        #area{
+            margin-left: 30%;
+            margin-top: 5%;
+            border:  rgb(0,0,240) 5px solid;
+        }
+        
+        table{
+            position:absolute;
+            height: 450px;
+            width: 550px;
+            left:30%;
+            top:12%;
+        }
+        
+        .firstCells{
+            background-position: 5px;
+        }
+        .secondCells {
+            width:140px;
+        }
+        .thirdCells {
+            background-position: 20px -5px ;
+        }
+    </style>
+    
+    <script> 
+        window.onload = function() {
+            //для будущей игры на двоих
+            function Player(name) {
+                this.name = name;
+                this.figures = "";
+                this.wins = 0;
+            }
+                
+            function Game () {
+              this.currentSymbol= "krestik";
+              this.firstPlayerScore = 0;
+              this.secondPlayerScore = 0;
+                
+            };
+            
+            Game.prototype.showResults = function() {
+                this.firstPlayerScore+":"+ this.secondPlayerScore;
+            };
+            
+            Game.prototype.updateCurrentSymbol = function() {
+                if(this.currentSymbol =="krestik")
+                    this.currentSymbol = "nolik";
+                else 
+                    this.currentSymbol = 'krestik';
+            };
+            
+            Game.prototype.getCurrentSymbol = function () {
+              return this.currentSymbol;  
+            };
+            
+            Game.prototype.imageForDownload = function() {
+              if(this.currentSymbol=='krestik')
+                  return 'images/krestik.jpg'
+            return 'images/nolik.jpg';
+                    
+            };
+            
+            var game = new Game();
+            
+                
+            
+            var table = document.querySelectorAll('td');
+            
+            //проверка отдельной линии по 3м индексам
+            function checkLine(x,y,z) {
+                 if(table[x].style.backgroundImage == table[y].style.backgroundImage && table[y].style.backgroundImage ==
+                       table[z].style.backgroundImage&&table[x].style.backgroundImage=='url("images/krestik.jpg")')
+                      alert("Победили крестики!");
+                
+                if(table[x].style.backgroundImage == table[y].style.backgroundImage && table[y].style.backgroundImage ==
+                       table[z].style.backgroundImage&&table[x].style.backgroundImage=='url("images/nolik.jpg")')
+                      alert("Победили нолики!");
+            }
+            
+            //проверка поля на окончание игры
+              function checkArea () {
+                  
+                  
+               //проверка горизонталей
+                   checkLine(0,1,2);
+                   checkLine(3,4,5);
+                   checkLine(6,7,8);
+                    
+                  
+                  //проверка вертикалей
+                  checkLine(0,3,6);
+                  checkLine(1,4,7);
+                  checkLine(2,5,8);
+                  
+                // проверка диагоналей 
+                  checkLine(0,4,8);
+                  checkLine(2,4,6);
+                              
+            }
+            
+            
+            //ответ на нажатие
+            function tableReaction () {
+                this.style.backgroundImage = 'url('+game.imageForDownload()+')';
+                this.style.backgroundRepeat = "no-repeat";
+                game.updateCurrentSymbol();
+                checkArea();
+            }
+            
+          
+            
+            
+            for(var i=0; i<table.length;i++)
+                table[i].onclick = tableReaction;
+            
+           
+            
+            
+            
+          
+            
+            
+        };
+        
+    </script>
+</head>
+
+<body>
+
+    <div id="playArea">
+        <img src="images/area.jpg"  id="area" height="450px" width="550px">
+        <table > 
+            <tr> <td class="firstCells"> </td> <td class="secondCells"> </td> <td class="thirdCells"> </td> </tr>
+            <tr> <td class="firstCells"> </td> <td class="secondCells"> </td> <td class="thirdCells"> </td> </tr>
+            <tr> <td class="firstCells"> </td> <td class="secondCells"> </td> <td class="thirdCells"> </td> </tr>
+        </table>
+    </div>
+    
+    <div id="menuArea"> </div>
+</body>
+</html>
